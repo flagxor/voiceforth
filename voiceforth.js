@@ -68,9 +68,9 @@ const server = http.createServer((request, response) => {
     try {
       const req = JSON.parse(requestBody);
       const query = req.inputs[0].rawInputs[0].query;
-      if (req.userStorage != expected_pass) {
-        if (query.toLowerCase() == expected_pass) {
-          response.write(prepReply(expected_pass, 'ok'));
+      if (req.userStorage != expected_passwd) {
+        if (query.toLowerCase() == expected_passwd) {
+          response.write(prepReply(expected_passwd, 'ok'));
           response.end();
           return;
         }
