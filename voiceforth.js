@@ -102,7 +102,7 @@ const server = http.createServer((request, response) => {
         if (pendingOutput.substr(0, query.length) == query) {
           pendingOutput = pendingOutput.substr(query.length);
         }
-        var tts = pendingOutput.split('\n')[0];
+        var tts = pendingOutput.trim().split('\n')[0];
         tts = tts.replace(/:[0-9]+:/, '');
         response.write(prepReply(passwd, pendingOutput, tts));
         pending = '';
