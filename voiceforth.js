@@ -23,7 +23,7 @@ gforth.on('exit', (code) => {
 function prepReply(text) {
   const reply = {
     conversationToken: '',
-    expectedUserResponse: true,
+    expectUserResponse: true,
     expectedInputs: [
       {
         inputPrompt: {
