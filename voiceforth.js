@@ -90,7 +90,7 @@ const server = http.createServer((request, response) => {
       if (query.toLowerCase() == 'sign out' ||
           query.toLowerCase() == 'log out' ||
           query.toLowerCase() == 'logout') {
-        response.write(prepReply('', 'ok'));
+        response.write(prepReply('x', 'ok'));
         response.end();
         return;
       }
