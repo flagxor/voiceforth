@@ -5,7 +5,7 @@ const http = require('http');
 const fs = require('fs');
 const process = require('process');
 
-var expected_passwd = fs.readFileSync('passwd').strip();
+var expected_passwd = fs.readFileSync('passwd').toString().trim();
 var pendingOutput = '';
 var gforth;
 
