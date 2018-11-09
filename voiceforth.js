@@ -82,7 +82,7 @@ const server = http.createServer((request, response) => {
         launchGforth();
       }
       if (query.toLowerCase() == 'talk to voice forth') {
-        response.write(prepReply(req.userStorage, 'ok');
+        response.write(prepReply(req.userStorage, 'ok'));
         response.end();
         return;
       }
