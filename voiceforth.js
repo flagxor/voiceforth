@@ -75,7 +75,7 @@ const server = http.createServer((request, response) => {
           response.end();
           return;
         }
-        response.write(prepReply('', "What's the password?"));
+        response.write(prepReply('x', "What's the password?"));
         response.end();
         return;
       }
@@ -90,7 +90,7 @@ const server = http.createServer((request, response) => {
       if (query.toLowerCase() == 'sign out' ||
           query.toLowerCase() == 'log out' ||
           query.toLowerCase() == 'logout') {
-        response.write(prepReply('x', 'ok'));
+        response.write(prepReply('x', "Ok. What's the password?"));
         response.end();
         return;
       }
