@@ -58,11 +58,11 @@ const server = http.createServer((request, response) => {
   request.on('end', function() {
     try {
       const req = JSON.parse(requestBody);
+      gforth.stdin.write(req.inputs[0].rawInputs.query + '\n');
     } catch (e) {
       response.end();
       return;
     }
-    gforth.stdin.write(req.inputs[0].raw_inputs.query + '\n');
     pendingOutput = '';  // Something better?
     setTimeout(() => {
       response.writeHead(200, {'Content-Type': 'text/html'});
