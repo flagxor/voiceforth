@@ -66,7 +66,7 @@ const server = http.createServer((request, response) => {
     pendingOutput = '';  // Something better?
     setTimeout(() => {
       response.writeHead(200, {'Content-Type': 'text/html'});
-      response.write(prepResult(pending));
+      response.write(prepReply(pendingOutput));
       pending = '';
       response.end();
     }, 100);
