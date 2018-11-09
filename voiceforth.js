@@ -68,7 +68,8 @@ const server = http.createServer((request, response) => {
     try {
       const req = JSON.parse(requestBody);
       const query = req.inputs[0].rawInputs[0].query;
-      if (req.userStorage != expected_passwd) {
+      const passwd = req.user.userStorage;
+      if (passwd != expected_passwd) {
         if (query.toLowerCase() == expected_passwd) {
           response.write(prepReply(expected_passwd, 'ok'));
           response.end();
@@ -82,7 +83,14 @@ const server = http.createServer((request, response) => {
         launchGforth();
       }
       if (query.toLowerCase() == 'talk to voice forth') {
-        response.write(prepReply(req.userStorage, 'ok'));
+        response.write(prepReply(passwd, 'ok'));
+        response.end();
+        return;
+      }
+      if (query.toLowerCase() == 'sign out' ||
+          query.toLowerCase() == 'log out' ||
+          query.toLowerCase() == 'logout') {
+        response.write(prepReply('', 'ok'));
         response.end();
         return;
       }
@@ -96,7 +104,7 @@ const server = http.createServer((request, response) => {
         }
         var tts = pendingOutput.split('\n')[0];
         tts = tts.replace(/:[0-9]+:/, '');
-        response.write(prepReply(req.userStorage, pendingOutput, tts));
+        response.write(prepReply(passwd, pendingOutput, tts));
         pending = '';
         response.end();
       }, 100);
