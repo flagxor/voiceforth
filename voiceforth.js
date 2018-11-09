@@ -19,7 +19,7 @@ function launchGforth() {
     pendingOutput += data.toString();
   });
   gforth.on('exit', (code) => {
-    process.exit(code);
+    gforth = undefined;
   });
 }
 
@@ -65,19 +65,23 @@ const server = http.createServer((request, response) => {
       if (query.toLowerCase() == 'talk to voice forth') {
         launchGforth();
       } else {
-        gforth.stdin.write(req.inputs[0].rawInputs[0].query + '\n');
+        gforth.stdin.write(query + '\n');
         pendingOutput = '';  // Something better?
       }
+      setTimeout(() => {
+        response.writeHead(200, {'Content-Type': 'text/html'});
+        // Strip input if the same.
+        if (pendingOutput.substr(0, query.length) == query) {
+          pendingOutput = pendingOutput.substr(query.length);
+        }
+        response.write(prepReply(pendingOutput));
+        pending = '';
+        response.end();
+      }, 100);
     } catch (e) {
       response.end();
       return;
     }
-    setTimeout(() => {
-      response.writeHead(200, {'Content-Type': 'text/html'});
-      response.write(prepReply(pendingOutput));
-      pending = '';
-      response.end();
-    }, 100);
   });
 });
 
