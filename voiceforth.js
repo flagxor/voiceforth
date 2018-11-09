@@ -101,6 +101,7 @@ const server = http.createServer((request, response) => {
         response.end();
       }, 100);
     } catch (e) {
+      console.error(e.stack);
       response.end();
       return;
     }
