@@ -70,7 +70,7 @@ const server = http.createServer((request, response) => {
       const query = req.inputs[0].rawInputs[0].query;
       if (req.userStorage != expected_pass) {
         if (query.toLowerCase() == expected_pass) {
-          response.write(prepReply(expected_pass, 'ok');
+          response.write(prepReply(expected_pass, 'ok'));
           response.end();
           return;
         }
