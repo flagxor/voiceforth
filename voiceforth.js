@@ -58,7 +58,7 @@ const server = http.createServer((request, response) => {
   request.on('end', function() {
     try {
       const req = JSON.parse(requestBody);
-      gforth.stdin.write(req.inputs[0].rawInputs.query + '\n');
+      gforth.stdin.write(req.inputs[0].rawInputs[0].query + '\n');
     } catch (e) {
       response.end();
       return;
