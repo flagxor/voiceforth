@@ -47,7 +47,7 @@ function prepReply(text) {
       },
     ],
   };
-  return JSON.stringify(result);
+  return JSON.stringify(reply);
 };
 
 const server = http.createServer((request, response) => {
