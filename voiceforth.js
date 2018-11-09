@@ -31,8 +31,8 @@ function prepReply(text) {
             items: [
               {
                 simpleResponse: {
-                  textToSpeech: pendingOutput,
-                  displayText: pendingOutput,
+                  textToSpeech: text,
+                  displayText: text,
                 },
               },
             ],
@@ -47,7 +47,7 @@ function prepReply(text) {
       },
     ],
   };
-  return JSON.stringify();
+  return JSON.stringify(result);
 };
 
 const server = http.createServer((request, response) => {
