@@ -51,7 +51,26 @@ function prepReply(passwd, text, tts) {
         possibleIntents: [
           {
             intent: 'actions.intent.TEXT',
-          }
+          },
+        ],
+        speechBiasingHints: [
+          ':',
+          ';',
+          '.',
+          ',',
+          '+',
+          '-',
+          '*',
+          '/',
+          '*/',
+          'dup',
+          'drop',
+          'swap',
+          'over',
+          'rot',
+          '-rot',
+          'emit',
+          'cr',
         ],
       },
     ],
