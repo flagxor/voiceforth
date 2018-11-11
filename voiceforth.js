@@ -62,34 +62,53 @@ function prepReply(passwd, text, tts) {
             intent: 'actions.intent.TEXT',
           },
         ],
-        speechBiasingHints: [
-          ':',
-          ';',
-          '.',
-          ',',
-          '+',
-          '-',
-          '*',
-          '/',
-          '*/',
-          'dup',
-          'drop',
-          'swap',
-          'over',
-          'rot',
-          '-rot',
-          'emit',
-          'cr',
-        ],
+        speechBiasingHints: [],
       },
     ],
   };
   return reply;
 };
 
+function filterQuery(query) {
+  query = ' ' + query.toLowerCase() + ' ';
+  query = query.replace('\n', ' ');
+  query = query.replace('\r', ' ');
+  query = query.replace('\t', ' ');
+  query = query.replace(' colon ', ' : ');
+  query = query.replace(' define ', ' : ');
+  query = query.replace(' semicolon ', ' ; ');
+  query = query.replace(' end ', ' ; ');
+  query = query.replace(' dot ', ' . ');
+  query = query.replace(' period ', ' . ');
+  query = query.replace(' print ', ' . ');
+  query = query.replace(' comma ', ' , ');
+  query = query.replace(' load ', ' @ ');
+  query = query.replace(' fetch ', ' @ ');
+  query = query.replace(' store ', ' ! ');
+  query = query.replace(' plus ', ' + ');
+  query = query.replace(' add ', ' + ');
+  query = query.replace(' minus ', ' - ');
+  query = query.replace(' subtract ', ' - ');
+  query = query.replace(' star slash ', ' */ ');
+  query = query.replace(' times ', ' * ');
+  query = query.replace(' multiply ', ' * ');
+  query = query.replace(' star ', ' * ');
+  query = query.replace(' divide ', ' / ');
+  query = query.replace(' slash ', ' / ');
+  query = query.replace(' dupe ', ' dup ');
+  query = query.replace(' back rot ', ' -rot ');
+  query = query.replace(' carriage return ', ' cr ');
+  query = query.replace(' push ', ' >r ');
+  query = query.replace(' pop ', ' r> ');
+  query = query.replace(' does ', ' does> ');
+  return query.trim();
+}
+
 function handleQuery(passwd, query) {
+  query = filterQuery(query);
+console.log(query);
   if (passwd != expected_passwd) {
-    if (query.toLowerCase() == expected_passwd) {
+    if (expected_passwd) {
       return Promise.resolve(prepReply(expected_passwd, 'ok'));
     }
     return Promise.resolve(prepReply('x', "What's the password?"));
