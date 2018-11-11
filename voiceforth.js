@@ -106,7 +106,6 @@ function filterQuery(query) {
 
 function handleQuery(passwd, query) {
   query = filterQuery(query);
-console.log(query);
   if (passwd != expected_passwd) {
     if (expected_passwd) {
       return Promise.resolve(prepReply(expected_passwd, 'ok'));
