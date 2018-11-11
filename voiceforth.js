@@ -101,6 +101,9 @@ function filterQuery(query) {
   query = query.replace(' push ', ' >r ');
   query = query.replace(' pop ', ' r> ');
   query = query.replace(' does ', ' does> ');
+  query = query.replace(' the ', ' ');
+  query = query.replace(' a ', ' ');
+  query = query.replace(' an ', ' ');
   return query.trim();
 }
 
