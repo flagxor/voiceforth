@@ -107,14 +107,17 @@ function handleQuery(passwd, query) {
   }
   gforth.stdin.write(query + '\n');
   pendingOutput = '';  // Something better?
-  return timeout(100).then(() => {
+  return timeout(50).then(() => {
     // Strip input if the same.
     if (pendingOutput.substr(0, query.length) == query) {
       pendingOutput = pendingOutput.substr(query.length);
     }
     var text = pendingOutput;
-    var tts = pendingOutput.trim().split('\n')[0];
-    tts = tts.replace(/:[0-9]+:/, '');
+    var tts = pendingOutput;
+    if (tts.search(/:[0-9]+:/) >= 0) {
+      tts = tts.trim().split('\n')[0];
+      tts = tts.replace(/:[0-9]+:/, '');
+    }
     pendingOutput = '';
     return prepReply(passwd, text, tts);
   });
