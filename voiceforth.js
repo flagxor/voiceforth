@@ -130,8 +130,9 @@ function handleQuery(passwd, query) {
     pendingSlideCommand = 'n';
     return Promise.resolve(prepReply(passwd, 'done'));
   }
-  if (query.toLowerCase().search(/^go to slide/) >= 0) {
-    pendingSlideCommand = 'g' + query.substr(12);
+  const slideCmd = 'go to slide number ';
+  if (query.toLowerCase().substr(slideCmd.length) == slideCmd) {
+    pendingSlideCommand = 'g' + query.substr(slideCmd.length);
     return Promise.resolve(prepReply(passwd, 'done'));
   }
   if (query.toLowerCase() == 'sign out' ||
