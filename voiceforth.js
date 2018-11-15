@@ -131,7 +131,7 @@ function handleQuery(passwd, query) {
     return Promise.resolve(prepReply(passwd, 'done'));
   }
   const slideCmd = 'go to slide number ';
-  if (query.toLowerCase().substr(slideCmd.length) == slideCmd) {
+  if (query.toLowerCase().substr(0, slideCmd.length) == slideCmd) {
     pendingSlideCommand = 'g' + query.substr(slideCmd.length);
     return Promise.resolve(prepReply(passwd, 'done'));
   }
