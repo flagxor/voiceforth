@@ -9,6 +9,7 @@ const process = require('process');
 const readline = require('readline');
 
 const expected_passwd = fs.readFileSync('passwd').toString().trim();
+var pendingSlideCommand = '';
 var pendingOutput = '';
 var gforth;
 
@@ -121,6 +122,18 @@ function handleQuery(passwd, query) {
   if (query.toLowerCase() == 'talk to voice forth') {
     return Promise.resolve(prepReply(passwd, 'ok'));
   }
+  if (query.toLowerCase() == 'previous slide') {
+    pendingSlideCommand = 'p';
+    return Promise.resolve(prepReply(passwd, ''));
+  }
+  if (query.toLowerCase() == 'next slide') {
+    pendingSlideCommand = 'n';
+    return Promise.resolve(prepReply(passwd, ''));
+  }
+  if (query.toLowerCase().search(/^goto slide/) >= 0) {
+    pendingSlideCommand = 'g' + query.substr(11);
+    return Promise.resolve(prepReply(passwd, ''));
+  }
   if (query.toLowerCase() == 'sign out' ||
       query.toLowerCase() == 'log out' ||
       query.toLowerCase() == 'logout') {
@@ -151,6 +164,14 @@ function runServer() {
       requestBody += data;
     });
     request.on('end', function() {
+      if (request.url == '/voicecheck') {
+        response.setHeader('Access-Control-Allow-Origin', '*');
+        response.writeHead(200, {'Content-Type': 'text/plain'});
+        response.write(pendingSlideCommand);
+        pendingSlideCommand = '';
+        response.end();
+        return;
+      }
       try {
         const req = JSON.parse(requestBody);
         const query = req.inputs[0].rawInputs[0].query;
