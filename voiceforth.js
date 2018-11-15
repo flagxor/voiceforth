@@ -130,8 +130,8 @@ function handleQuery(passwd, query) {
     pendingSlideCommand = 'n';
     return Promise.resolve(prepReply(passwd, 'done'));
   }
-  if (query.toLowerCase().search(/^goto slide/) >= 0) {
-    pendingSlideCommand = 'g' + query.substr(11);
+  if (query.toLowerCase().search(/^go to slide/) >= 0) {
+    pendingSlideCommand = 'g' + query.substr(12);
     return Promise.resolve(prepReply(passwd, 'done'));
   }
   if (query.toLowerCase() == 'sign out' ||
