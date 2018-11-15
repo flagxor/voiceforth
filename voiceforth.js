@@ -124,15 +124,15 @@ function handleQuery(passwd, query) {
   }
   if (query.toLowerCase() == 'previous slide') {
     pendingSlideCommand = 'p';
-    return Promise.resolve(prepReply(passwd, 'ok', ''));
+    return Promise.resolve(prepReply(passwd, 'done'));
   }
   if (query.toLowerCase() == 'next slide') {
     pendingSlideCommand = 'n';
-    return Promise.resolve(prepReply(passwd, 'ok', ''));
+    return Promise.resolve(prepReply(passwd, 'done'));
   }
   if (query.toLowerCase().search(/^goto slide/) >= 0) {
     pendingSlideCommand = 'g' + query.substr(11);
-    return Promise.resolve(prepReply(passwd, 'ok', ''));
+    return Promise.resolve(prepReply(passwd, 'done'));
   }
   if (query.toLowerCase() == 'sign out' ||
       query.toLowerCase() == 'log out' ||
