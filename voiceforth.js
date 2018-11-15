@@ -105,6 +105,17 @@ function filterQuery(query) {
   query = query.replace(' the ', ' ');
   query = query.replace(' a ', ' ');
   query = query.replace(' an ', ' ');
+  query = query.replace(' zero ', ' 0 ');
+  query = query.replace(' one ', ' 1 ');
+  query = query.replace(' two ', ' 2 ');
+  query = query.replace(' three ', ' 3 ');
+  query = query.replace(' four ', ' 4 ');
+  query = query.replace(' five ', ' 5 ');
+  query = query.replace(' six ', ' 6 ');
+  query = query.replace(' seven ', ' 7 ');
+  query = query.replace(' eight ', ' 8 ');
+  query = query.replace(' nine ', ' 9 ');
+  query = query.replace(' ten ', ' 10 ');
   return query.trim();
 }
 
