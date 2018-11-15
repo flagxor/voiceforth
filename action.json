@@ -1,0 +1,26 @@
+{
+  "actions": [
+    {
+      "description": "Default Welcome Intent",
+      "name": "MAIN",
+      "fulfillment": {
+        "conversationName": "Voice Forth"
+      },
+      "intent": {
+        "name": "actions.intent.MAIN",
+        "trigger": {
+          "queryPatterns": [
+            "talk to Voice Forth"
+          ]
+        }
+      }
+    }
+  ],
+  "conversations": {
+    "Voice Forth": {
+      "name": "Voice Forth",
+      "url": "https://voice.flagxor.com/voiceforth"
+    }
+  },
+  "locale": "en"
+}
