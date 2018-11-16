@@ -10,8 +10,8 @@ const readline = require('readline');
 
 const expected_passwd = fs.readFileSync('passwd').toString().trim();
 var pendingSlideCommand = '';
+var pendingSlideListeners = [];
 var pendingOutput = '';
-var pendingListeners = [];
 var gforth;
 
 function timeout(duration) {
@@ -31,10 +31,10 @@ function HandleCheckReply(response) {
 
 function addSlideCommand(cmd) {
   pendingSlideCommand = cmd;
-  for (var i = 0; i < pendingListeners.length; ++i) {
-    pendingListeners[i].handle();
+  for (var i = 0; i < pendingSlideListeners.length; ++i) {
+    pendingSlideListeners[i].handle();
   }
-  pendingListeners = [];
+  pendingSlideListeners = [];
   pendingSlideCommand = '';
 }
 
