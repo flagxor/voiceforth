@@ -11,12 +11,31 @@ const readline = require('readline');
 const expected_passwd = fs.readFileSync('passwd').toString().trim();
 var pendingSlideCommand = '';
 var pendingOutput = '';
+var pendingListeners = [];
 var gforth;
 
 function timeout(duration) {
   return new Promise((resolve) => {
     setTimeout(resolve, duration);
   });
+}
+
+function HandleCheckReply(response) {
+  this.handle = function() {
+    response.setHeader('Access-Control-Allow-Origin', '*');
+    response.writeHead(200, {'Content-Type': 'text/plain'});
+    response.write(pendingSlideCommand);
+    response.end();
+  };
+}
+
+function addSlideCommand(cmd) {
+  pendingSlideCommand = cmd;
+  for (var i = 0; i < pendingListeners.length; ++i) {
+    pendingListeners[i].handle();
+  }
+  pendingListeners = [];
+  pendingSlideCommand = '';
 }
 
 function launchGforth() {
@@ -134,16 +153,16 @@ function handleQuery(passwd, query) {
     return Promise.resolve(prepReply(passwd, 'ok'));
   }
   if (query.toLowerCase() == 'previous slide') {
-    pendingSlideCommand = 'p';
+    addSlideCommand('p');
     return Promise.resolve(prepReply(passwd, 'done'));
   }
   if (query.toLowerCase() == 'next slide') {
-    pendingSlideCommand = 'n';
+    addSlideCommand('n');
     return Promise.resolve(prepReply(passwd, 'done'));
   }
   const slideCmd = 'go to slide number ';
   if (query.toLowerCase().substr(0, slideCmd.length) == slideCmd) {
-    pendingSlideCommand = 'g' + query.substr(slideCmd.length);
+    addSlideCommand('g' + query.substr(slideCmd.length));
     return Promise.resolve(prepReply(passwd, 'done'));
   }
   if (query.toLowerCase() == 'sign out' ||
@@ -177,11 +196,11 @@ function runServer() {
     });
     request.on('end', function() {
       if (request.url == '/voicecheck') {
-        response.setHeader('Access-Control-Allow-Origin', '*');
-        response.writeHead(200, {'Content-Type': 'text/plain'});
-        response.write(pendingSlideCommand);
-        pendingSlideCommand = '';
-        response.end();
+        var reply = new HandleCheckReply(response);
+        pendingSlideListeners.push(reply);
+        if (pendingSlideCommand) {
+          addSlideCommand(pendingSlideCommand);
+        }
         return;
       }
       try {
