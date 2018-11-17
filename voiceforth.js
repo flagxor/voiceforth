@@ -187,6 +187,9 @@ function handleQuery(passwd, query) {
       tts = tts.trim().split('\n')[0];
       tts = tts.replace(/:[0-9]+:/, '');
     }
+    if (text.length > 600) {
+      text = text.substr(0, 600) + ' ...';
+    }
     pendingOutput = '';
     addSlideCommand('o' + text);
     return prepReply(passwd, text, tts);
