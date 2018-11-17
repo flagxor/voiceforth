@@ -31,6 +31,9 @@ function HandleCheckReply(response) {
 
 function addSlideCommand(cmd) {
   pendingSlideCommand = cmd;
+  if (pendingSlideListeners.length === 0) {
+    return;
+  }
   for (var i = 0; i < pendingSlideListeners.length; ++i) {
     pendingSlideListeners[i].handle();
   }
