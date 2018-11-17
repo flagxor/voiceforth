@@ -8,9 +8,15 @@
       },
       "intent": {
         "name": "actions.intent.MAIN",
+        "parameters": [{
+          "name": "command",
+          "type": "org.schema.type.Text"
+        }],
         "trigger": {
           "queryPatterns": [
-            "talk to Voice Forth"
+            "talk to Voice Forth",
+            "ask Voice Forth $org.schema.type.Text:command",
+            "forth $org.schema.type.Text:command"
           ]
         }
       }
