@@ -98,6 +98,7 @@ function filterQuery(query) {
   query = query.replace('\r', ' ');
   query = query.replace('\t', ' ');
   query = query.replace(' ask voice forth ', ' ');
+  query = query.replace(' ask voice 4th ', ' ');
   query = query.replace(' colon ', ' : ');
   query = query.replace(' define ', ' : ');
   query = query.replace(' semicolon ', ' ; ');
