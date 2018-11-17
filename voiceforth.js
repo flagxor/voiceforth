@@ -57,14 +57,17 @@ function launchGforth() {
   });
 }
 
-function prepReply(passwd, text, tts) {
+function prepReply(passwd, text, tts, expectReply) {
   if (tts === undefined) {
     tts = text;
+  }
+  if (expectReply === undefined) {
+    expectReply = true;
   }
   const reply = {
     conversationToken: '',
     userStorage: passwd,
-    expectUserResponse: true,
+    expectUserResponse: expectReply,
     expectedInputs: [
       {
         inputPrompt: {
@@ -144,6 +147,7 @@ function filterQuery(query) {
 }
 
 function handleQuery(passwd, query) {
+  const wasAsk = query.toLowerCase().search('ask voice') >= 0;
   query = filterQuery(query);
   if (passwd != expected_passwd) {
     if (expected_passwd) {
@@ -159,16 +163,16 @@ function handleQuery(passwd, query) {
   }
   if (query.toLowerCase() == 'previous slide') {
     addSlideCommand('p');
-    return Promise.resolve(prepReply(passwd, 'done'));
+    return Promise.resolve(prepReply(passwd, 'done', 'done', !wasAsk));
   }
   if (query.toLowerCase() == 'next slide') {
     addSlideCommand('n');
-    return Promise.resolve(prepReply(passwd, 'done'));
+    return Promise.resolve(prepReply(passwd, 'done', 'done', !wasAsk));
   }
   const slideCmd = 'go to slide number ';
   if (query.toLowerCase().substr(0, slideCmd.length) == slideCmd) {
     addSlideCommand('g' + query.substr(slideCmd.length));
-    return Promise.resolve(prepReply(passwd, 'done'));
+    return Promise.resolve(prepReply(passwd, 'done', 'done', !wasAsk));
   }
   addSlideCommand('i' + query);
   if (query.toLowerCase() == 'sign out' ||
@@ -194,7 +198,7 @@ function handleQuery(passwd, query) {
     }
     pendingOutput = '';
     addSlideCommand('o' + text);
-    return prepReply(passwd, text, tts);
+    return prepReply(passwd, text, tts, !wasAsk);
   });
 }
 
