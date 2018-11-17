@@ -204,7 +204,7 @@ function runServer() {
     });
     request.on('end', function() {
       if (request.url == '/voicecheck') {
-        if (requestBody.strip() != 'passwd=' + expected_passwd) {
+        if (requestBody.trim() != 'passwd=' + expected_passwd) {
           response.end();
           return;
         }
