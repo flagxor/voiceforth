@@ -100,6 +100,8 @@ function filterQuery(query) {
   query = query.replace('\n', ' ');
   query = query.replace('\r', ' ');
   query = query.replace('\t', ' ');
+  query = query.replace(' ask voice forth for ', ' ');
+  query = query.replace(' ask voice 4th for ', ' ');
   query = query.replace(' ask voice forth ', ' ');
   query = query.replace(' ask voice 4th ', ' ');
   query = query.replace(' colon ', ' : ');
