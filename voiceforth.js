@@ -68,7 +68,9 @@ function prepReply(passwd, text, tts, expectReply) {
     conversationToken: '',
     userStorage: passwd,
     expectUserResponse: expectReply,
-    expectedInputs: [
+  };
+  if (expectReply) {
+    reply.expectedInputs = [
       {
         inputPrompt: {
           richInitialPrompt: {
@@ -90,8 +92,21 @@ function prepReply(passwd, text, tts, expectReply) {
         ],
         speechBiasingHints: [],
       },
-    ],
-  };
+    ];
+  } else {
+    reply.finalResponse = {
+      richResponse: {
+        items: [
+          {
+            simpleResponse: {
+              textToSpeech: tts,
+              displayText: text,
+            },
+          },
+        ],
+      },
+    };
+  }
   return reply;
 };
 
