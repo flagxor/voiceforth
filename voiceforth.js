@@ -165,6 +165,7 @@ function handleQuery(passwd, query) {
     addSlideCommand('g' + query.substr(slideCmd.length));
     return Promise.resolve(prepReply(passwd, 'done'));
   }
+  addSlideCommand('i' + query);
   if (query.toLowerCase() == 'sign out' ||
       query.toLowerCase() == 'log out' ||
       query.toLowerCase() == 'logout') {
@@ -184,6 +185,7 @@ function handleQuery(passwd, query) {
       tts = tts.replace(/:[0-9]+:/, '');
     }
     pendingOutput = '';
+    addSlideCommand('o' + text);
     return prepReply(passwd, text, tts);
   });
 }
